@@ -34,7 +34,6 @@ import de.ub0r.android.websms.connector.common.ConnectorSpec;
 import de.ub0r.android.websms.connector.common.Log;
 import de.ub0r.android.websms.connector.common.Utils;
 import de.ub0r.android.websms.connector.common.WebSMSException;
-import de.ub0r.android.websms.connector.common.ConnectorSpec.SubConnectorSpec;
 
 /**
  * AsyncTask to manage IO to cherry-sms.com API.
@@ -44,9 +43,9 @@ import de.ub0r.android.websms.connector.common.ConnectorSpec.SubConnectorSpec;
 public final class ConnectorCherrySMS extends BasicConnector {
 	/** Tag for output. */
 	private static final String TAG = "cherry";
-	/** {@link SubConnectorSpec} ID: with sender. */
+	/** SubConnectorSpec ID: with sender. */
 	private static final String ID_W_SENDER = "w_sender";
-	/** {@link SubConnectorSpec} ID: without sender. */
+	/** SubConnectorSpec ID: without sender. */
 	private static final String ID_WO_SENDER = "wo_sender";
 
 	/** CherrySMS Gateway URL. */
@@ -100,11 +99,8 @@ public final class ConnectorCherrySMS extends BasicConnector {
 	 * @param ret
 	 *            return code
 	 * @return true if no error code
-	 * @throws WebSMSException
-	 *             WebSMSException
 	 */
-	private static boolean checkReturnCode(final Context context, final int ret)
-			throws WebSMSException {
+	private static boolean checkReturnCode(final Context context, final int ret) {
 		Log.d(TAG, "ret=" + ret);
 		switch (ret) {
 		case 100:
@@ -143,11 +139,8 @@ public final class ConnectorCherrySMS extends BasicConnector {
 	 *            {@link Context}
 	 * @param command
 	 *            {@link ConnectorCommand}
-	 * @throws WebSMSException
-	 *             WebSMSException
 	 */
-	private void sendData(final Context context, final ConnectorCommand command)
-			throws WebSMSException {
+	private void sendData(final Context context, final ConnectorCommand command) {
 		// do IO
 		try { // get Connection
 			final StringBuilder url = new StringBuilder(URL);
@@ -184,7 +177,7 @@ public final class ConnectorCherrySMS extends BasicConnector {
 			Log.d(TAG, "--HTTP GET--");
 			// send data
 			HttpResponse response = Utils.getHttpClient(url.toString(), null,
-					null, null, null);
+					null, null, null, false);
 			int resp = response.getStatusLine().getStatusCode();
 			if (resp != HttpURLConnection.HTTP_OK) {
 				throw new WebSMSException(context, R.string.error_http, ""
@@ -349,7 +342,7 @@ public final class ConnectorCherrySMS extends BasicConnector {
 	@Override
 	protected void parseResponse(final Context context,
 			final ConnectorCommand command, final ConnectorSpec cs,
-			final String htmlText) throws WebSMSException {
+			final String htmlText) {
 		if (htmlText == null || htmlText.length() == 0) {
 			throw new WebSMSException(context, R.string.error_service);
 		}
