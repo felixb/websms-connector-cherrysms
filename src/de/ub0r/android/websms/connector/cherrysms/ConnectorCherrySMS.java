@@ -18,11 +18,8 @@
  */
 package de.ub0r.android.websms.connector.cherrysms;
 
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.content.Context;
@@ -129,88 +126,6 @@ public final class ConnectorCherrySMS extends BasicConnector {
 			throw new WebSMSException(context, R.string.error_cherry_90);
 		default:
 			throw new WebSMSException(context, R.string.error, " code: " + ret);
-		}
-	}
-
-	/**
-	 * Send data.
-	 * 
-	 * @param context
-	 *            {@link Context}
-	 * @param command
-	 *            {@link ConnectorCommand}
-	 */
-	private void sendData(final Context context, final ConnectorCommand command) {
-		// do IO
-		try { // get Connection
-			final StringBuilder url = new StringBuilder(URL);
-			final ConnectorSpec cs = this.getSpec(context);
-			final SharedPreferences p = PreferenceManager
-					.getDefaultSharedPreferences(context);
-			url.append("?user=");
-			url.append(Utils.international2oldformat(Utils.getSender(context,
-					command.getDefSender())));
-			url.append("&password=");
-			url.append(Utils.md5(p.getString(Preferences.PREFS_PASSWORD, "")));
-			final String text = command.getText();
-			if (text != null && text.length() > 0) {
-				boolean sendWithSender = false;
-				final String sub = command.getSelectedSubConnector();
-				if (sub != null && sub.equals(ID_W_SENDER)) {
-					sendWithSender = true;
-				}
-				Log.d(TAG, "send with sender = " + sendWithSender);
-				if (sendWithSender) {
-					url.append("&from=1");
-				}
-				url.append("&message=");
-				url.append(URLEncoder.encode(text, "ISO-8859-15"));
-				url.append("&to=");
-				url.append(Utils.joinRecipientsNumbers(Utils
-						.national2international(command.getDefPrefix(), command
-								.getRecipients()), ";", true));
-			} else {
-				url.append("&check=guthaben");
-			}
-			Log.d(TAG, "--HTTP GET--");
-			Log.d(TAG, url.toString());
-			Log.d(TAG, "--HTTP GET--");
-			// send data
-			HttpResponse response = Utils.getHttpClient(url.toString(), null,
-					null, null, null, false);
-			int resp = response.getStatusLine().getStatusCode();
-			if (resp != HttpURLConnection.HTTP_OK) {
-				throw new WebSMSException(context, R.string.error_http, ""
-						+ resp);
-			}
-			String htmlText = Utils.stream2str(
-					response.getEntity().getContent()).trim();
-			if (htmlText == null || htmlText.length() == 0) {
-				throw new WebSMSException(context, R.string.error_service);
-			}
-			Log.d(TAG, "--HTTP RESPONSE--");
-			Log.d(TAG, htmlText);
-			Log.d(TAG, "--HTTP RESPONSE--");
-			String[] lines = htmlText.split("\n");
-			htmlText = null;
-			int l = lines.length;
-			if (text != null && text.length() > 0) {
-				try {
-					final int ret = Integer.parseInt(lines[0].trim());
-					checkReturnCode(context, ret);
-					if (l > 1) {
-						cs.setBalance(lines[l - 1].trim());
-					}
-				} catch (NumberFormatException e) {
-					Log.e(TAG, "could not parse ret", e);
-					throw new WebSMSException(e.getMessage());
-				}
-			} else {
-				cs.setBalance(lines[l - 1].trim());
-			}
-		} catch (Exception e) {
-			Log.e(TAG, null, e);
-			throw new WebSMSException(e.getMessage());
 		}
 	}
 
