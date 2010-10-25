@@ -27,6 +27,12 @@
 		android:defaultValue="true" android:title="@string/use_derfault_sender_"
 		android:summary="@string/use_derfault_sender_hint"
 		android:disableDependentsState="true" android:dependency="enable_cherrysms" />
+	<CheckBoxPreference android:key="hide_nosender"
+		android:title="@string/ignore_nosender_" android:summary="@string/ignore_nosender_hint"
+		android:disableDependentsState="true" android:dependency="enable_cherrysms" />
+	<CheckBoxPreference android:key="hide_withsender"
+		android:title="@string/ignore_withsender_" android:summary="@string/ignore_withsender_hint"
+		android:disableDependentsState="true" android:dependency="enable_cherrysms" />
 	<EditTextPreference android:key="custom_sender"
 		android:inputType="phone" android:title="@string/custom_sender_"
 		android:dialogTitle="@string/custom_sender_" android:summary="@string/sender_hint"

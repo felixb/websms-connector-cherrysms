@@ -44,6 +44,10 @@ public final class ConnectorCherrySMS extends BasicConnector {
 	private static final String ID_W_SENDER = "w_sender";
 	/** SubConnectorSpec ID: without sender. */
 	private static final String ID_WO_SENDER = "wo_sender";
+	/** Preference's name: hide with sender subcon. */
+	private static final String PREFS_HIDE_W_SENDER = "hide_withsender";
+	/** Preference's name: hide without sender subcon. */
+	private static final String PREFS_HIDE_WO_SENDER = "hide_nosender";
 
 	/** CherrySMS Gateway URL. */
 	private static final String URL = "https://gw.cherry-sms.com/";
@@ -62,9 +66,16 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		c.setCapabilities(ConnectorSpec.CAPABILITIES_UPDATE
 				| ConnectorSpec.CAPABILITIES_SEND
 				| ConnectorSpec.CAPABILITIES_PREFS);
-		c.addSubConnector(ID_WO_SENDER, context.getString(R.string.wo_sender),
-				0);
-		c.addSubConnector(ID_W_SENDER, context.getString(R.string.w_sender), 0);
+		final SharedPreferences p = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		if (!p.getBoolean(PREFS_HIDE_WO_SENDER, false)) {
+			c.addSubConnector(ID_WO_SENDER, context
+					.getString(R.string.wo_sender), 0);
+		}
+		if (!p.getBoolean(PREFS_HIDE_W_SENDER, false)) {
+			c.addSubConnector(ID_W_SENDER,
+					context.getString(R.string.w_sender), 0);
+		}
 		return c;
 	}
 
