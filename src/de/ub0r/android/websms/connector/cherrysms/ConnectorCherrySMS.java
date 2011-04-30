@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 Felix Bechstein
+ * Copyright (C) 2010-2011 Felix Bechstein
  * 
  * This file is part of WebSMS.
  * 
@@ -51,6 +51,8 @@ public final class ConnectorCherrySMS extends BasicConnector {
 
 	/** CherrySMS Gateway URL. */
 	private static final String URL = "https://gw.cherry-sms.com/";
+	/** Ad unitid. */
+	private static final String AD_UNITID = "a14dbba90186ed3";
 
 	/**
 	 * {@inheritDoc}
@@ -63,6 +65,7 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		c.setAuthor(// .
 				context.getString(R.string.connector_cherrysms_author));
 		c.setBalance(null);
+		c.setAdUnitId(AD_UNITID);
 		c.setCapabilities(ConnectorSpec.CAPABILITIES_UPDATE
 				| ConnectorSpec.CAPABILITIES_SEND
 				| ConnectorSpec.CAPABILITIES_PREFS);

@@ -37,9 +37,6 @@
 		android:inputType="phone" android:title="@string/custom_sender_"
 		android:dialogTitle="@string/custom_sender_" android:summary="@string/sender_hint"
 		android:dependency="use_default_sender" />
-	<PreferenceScreen android:title="@string/create_account_"
-		android:summary="@string/partner_cherrysms_hint">
-		<intent android:action="android.intent.action.VIEW"
-			android:data="@string/partner_cherrysms_url" />
-	</PreferenceScreen>
+	<PreferenceScreen android:key="new_account" android:title="@string/create_account_"
+		android:summary="@string/partner_cherrysms_hint" />
 </PreferenceScreen>

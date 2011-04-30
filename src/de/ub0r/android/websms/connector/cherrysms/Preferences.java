@@ -18,19 +18,35 @@
  */
 package de.ub0r.android.websms.connector.cherrysms;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.Preference.OnPreferenceClickListener;
+import de.ub0r.android.websms.connector.common.Log;
 
 /**
  * Preferences.
  * 
  * @author flx
  */
-public final class Preferences extends PreferenceActivity {
+public final class Preferences extends PreferenceActivity implements
+		OnPreferenceClickListener {
+	/** Tag for output. */
+	private static final String TAG = "cherry.pref";
+
 	/** Preference key: enabled. */
 	static final String PREFS_ENABLED = "enable_cherrysms";
 	/** Preference's name: user's password. */
 	static final String PREFS_PASSWORD = "password_cherrysms";
+
+	/** Base referral URL. */
+	private static final String REF_URL = "http://www.cherry-sms.com/?ref=";
+	// "http://www.cherry-sms.com/index_iPhone.php?action=Register&ref=";
+	/** Ids of referrals. */
+	private static final String[] REF_IDS = new String[] { "DWNWAAAU",
+			"ZXAQDHJW" };
 
 	/**
 	 * {@inheritDoc}
@@ -39,5 +55,19 @@ public final class Preferences extends PreferenceActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.addPreferencesFromResource(R.xml.connector_cherrysms_prefs);
+		this.findPreference("new_account").setOnPreferenceClickListener(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean onPreferenceClick(final Preference preference) {
+		final int i = (int) Math.floor(Math.random() * REF_IDS.length);
+		final String url = REF_URL + REF_IDS[i];
+		final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+		Log.i(TAG, "Referral URL: " + url);
+		this.startActivity(intent);
+		return true;
 	}
 }
