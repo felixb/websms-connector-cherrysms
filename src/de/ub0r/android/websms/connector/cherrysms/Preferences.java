@@ -46,7 +46,7 @@ public final class Preferences extends PreferenceActivity implements
 	// "http://www.cherry-sms.com/index_iPhone.php?action=Register&ref=";
 	/** Ids of referrals. */
 	private static final String[] REF_IDS = new String[] { "DWNWAAAU",
-			"ZXAQDHJW" };
+			"ZXAQDHJW", "JJAZACFZ" };
 
 	/**
 	 * {@inheritDoc}
