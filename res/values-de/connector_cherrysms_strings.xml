@@ -20,7 +20,6 @@
 	<string name="connector_cherrysms_preferences">Einstellungen - CherrySMS</string>
 	<string name="enable_cherrysms">Aktiviere CherrySMS</string>
 	<string name="partner_cherrysms_hint">Neuen cherry-sms.com Account anlegen</string>
-	<string name="partner_cherrysms_url">http://www.cherry-sms.com/?ref=DWNWAAAU</string>
 	<string name="wo_sender">ohne Absender</string>
 	<string name="w_sender">mit Absender</string>
 	
