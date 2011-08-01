@@ -22,8 +22,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceClickListener;
+import de.ub0r.android.websms.connector.common.ConnectorPreferenceActivity;
 import de.ub0r.android.websms.connector.common.Log;
 
 /**
@@ -31,7 +31,7 @@ import de.ub0r.android.websms.connector.common.Log;
  * 
  * @author flx
  */
-public final class Preferences extends PreferenceActivity implements
+public final class Preferences extends ConnectorPreferenceActivity implements
 		OnPreferenceClickListener {
 	/** Tag for output. */
 	private static final String TAG = "cherry.pref";
