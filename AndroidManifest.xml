@@ -56,7 +56,7 @@
 			</intent-filter>
 		</receiver>
 	</application>
-	<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="13" />
+	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="13" />
 	<supports-screens android:smallScreens="true"
 		android:normalScreens="true" android:largeScreens="true"
 		android:anyDensity="true" />
