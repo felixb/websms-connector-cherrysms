@@ -18,7 +18,7 @@
 	-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="de.ub0r.android.websms.connector.cherrysms"
-	android:versionName="1.8.3" android:versionCode="1511">
+	android:versionName="1.8.4" android:versionCode="1512">
 	<application android:label="@string/app_name" android:icon="@drawable/icon"
 		android:hardwareAccelerated="false">
 
