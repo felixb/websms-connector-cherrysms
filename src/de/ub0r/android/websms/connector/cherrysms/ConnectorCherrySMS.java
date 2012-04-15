@@ -54,16 +54,13 @@ public final class ConnectorCherrySMS extends BasicConnector {
 	/** Ad unitid. */
 	private static final String AD_UNITID = "a14dbba90186ed3";
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public ConnectorSpec initSpec(final Context context) {
 		final String name = context
 				.getString(R.string.connector_cherrysms_name);
 		ConnectorSpec c = new ConnectorSpec(name);
 		c.setAuthor(// .
-				context.getString(R.string.connector_cherrysms_author));
+		context.getString(R.string.connector_cherrysms_author));
 		c.setBalance(null);
 		c.setAdUnitId(AD_UNITID);
 		c.setCapabilities(ConnectorSpec.CAPABILITIES_UPDATE
@@ -72,8 +69,8 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		final SharedPreferences p = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		if (!p.getBoolean(PREFS_HIDE_WO_SENDER, false)) {
-			c.addSubConnector(ID_WO_SENDER, context
-					.getString(R.string.wo_sender), 0);
+			c.addSubConnector(ID_WO_SENDER,
+					context.getString(R.string.wo_sender), 0);
 		}
 		if (!p.getBoolean(PREFS_HIDE_W_SENDER, false)) {
 			c.addSubConnector(ID_W_SENDER,
@@ -82,9 +79,6 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		return c;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public ConnectorSpec updateSpec(final Context context,
 			final ConnectorSpec connectorSpec) {
@@ -143,59 +137,38 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getParamUsername() {
 		return "user";
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getParamPassword() {
 		return "password";
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getParamRecipients() {
 		return "to";
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getParamSender() {
-		return "xxx";
+		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getParamText() {
 		return "message";
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getUsername(final Context context,
 			final ConnectorCommand command, final ConnectorSpec cs) {
-		return Utils.international2oldformat(Utils.getSender(context, command
-				.getDefSender()));
+		return Utils.international2oldformat(Utils.getSender(context,
+				command.getDefSender()));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getPassword(final Context context,
 			final ConnectorCommand command, final ConnectorSpec cs) {
@@ -204,52 +177,35 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		return Utils.md5(p.getString(Preferences.PREFS_PASSWORD, ""));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getRecipients(final ConnectorCommand command) {
-		return Utils.joinRecipientsNumbers(Utils.national2international(command
-				.getDefPrefix(), command.getRecipients()), ";", true);
+		return Utils.joinRecipientsNumbers(
+				Utils.national2international(command.getDefPrefix(),
+						command.getRecipients()), ";", true);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getSender(final Context context,
 			final ConnectorCommand command, final ConnectorSpec cs) {
-		return "xxx";
+		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getUrlBalance(final ArrayList<BasicNameValuePair> d) {
 		d.add(new BasicNameValuePair("check", "guthaben"));
 		return URL;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected String getUrlSend(final ArrayList<BasicNameValuePair> d) {
 		return URL;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	protected boolean usePost() {
+	protected boolean usePost(final ConnectorCommand command) {
 		return false;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void addExtraArgs(final Context context,
 			final ConnectorCommand command, final ConnectorSpec cs,
@@ -265,9 +221,6 @@ public final class ConnectorCherrySMS extends BasicConnector {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	protected void parseResponse(final Context context,
 			final ConnectorCommand command, final ConnectorSpec cs,
