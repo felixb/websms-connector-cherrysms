@@ -1,71 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-	<!--
-		Copyright (C) 2010 Felix Bechstein
-	-->
-	<!--
-		This file is part of AndGMXsms. This program is free software; you can
+<!-- Copyright (C) 2010 Felix Bechstein -->
+<!--
+		This file is part of WebSMS. This program is free software; you can
 		redistribute it and/or modify it under the terms of the GNU General
 		Public License as published by the Free Software Foundation; either
 		version 3 of the License, or (at your option) any later version.
-	-->
-	<!--
+-->
+<!--
 		This program is distributed in the hope that it will be useful, but
 		WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 		General Public License for more details. You should have received a
 		copy of the GNU General Public License along with this program; If
 		not, see <http://www.gnu.org/licenses/>.
-	-->
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.ub0r.android.websms.connector.cherrysms"
-	android:versionName="1.8.4" android:versionCode="1512">
-	<application android:label="@string/app_name" android:icon="@drawable/icon"
-		android:hardwareAccelerated="false">
+    package="de.ub0r.android.websms.connector.cherrysms"
+    android:versionCode="1512"
+    android:versionName="1.8.4" >
 
-		<!--
+    <uses-sdk
+        android:minSdkVersion="3"
+        android:targetSdkVersion="16" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- WAKE_LOCK needed to make sure, sms are send even if user sends device to sleep. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:hardwareAccelerated="false"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+
+        <!--
 			This Activity is brought by the WebSMS Connector Plugin API. It shows
 			a simple information about this connector when launching it via
 			"open" button from android market.
-		-->
-		<activity android:name="de.ub0r.android.websms.connector.common.InfoActivity"
-			android:label="@string/app_name" android:icon="@drawable/icon"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.INFO" />
-			</intent-filter>
-		</activity>
+        -->
+        <activity
+            android:name="de.ub0r.android.websms.connector.common.InfoActivity"
+            android:icon="@drawable/icon"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-		<!-- Service doing all the IO. -->
-		<service android:name="de.ub0r.android.websms.connector.common.ConnectorService"
-			android:exported="false" />
+                <category android:name="android.intent.category.INFO" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name="Preferences">
-			<intent-filter>
-				<action android:name="de.ub0r.android.websms.connector.cherrysms.PREFS" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-		<receiver
-			android:name="de.ub0r.android.websms.connector.cherrysms.ConnectorCherrySMS"
-			android:enabled="true" android:exported="true">
-			<intent-filter>
-				<action android:name="de.ub0r.android.websms.connector.cherrysms.RUN_UPDATE" />
-				<action android:name="de.ub0r.android.websms.connector.cherrysms.RUN_SEND" />
-				<action android:name="de.ub0r.android.websms.connector.UPDATE" />
-			</intent-filter>
-		</receiver>
-	</application>
-	<uses-sdk android:minSdkVersion="3" android:targetSdkVersion="13" />
-	<supports-screens android:smallScreens="true"
-		android:normalScreens="true" android:largeScreens="true"
-		android:anyDensity="true" />
-	<uses-feature android:name="android.hardware.touchscreen"
-		android:required="false" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<!--
-		WAKE_LOCK needed to make sure, sms are send even if user sends device
-		to sleep.
-	-->
-	<uses-permission android:name="android.permission.WAKE_LOCK" />
-</manifest> 
+        <!-- Service doing all the IO. -->
+        <service
+            android:name="de.ub0r.android.websms.connector.common.ConnectorService"
+            android:exported="false" />
+
+        <activity android:name="Preferences" >
+            <intent-filter>
+                <action android:name="de.ub0r.android.websms.connector.cherrysms.PREFS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="de.ub0r.android.websms.connector.cherrysms.ConnectorCherrySMS"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="de.ub0r.android.websms.connector.cherrysms.RUN_UPDATE" />
+                <action android:name="de.ub0r.android.websms.connector.cherrysms.RUN_SEND" />
+                <action android:name="de.ub0r.android.websms.connector.UPDATE" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
